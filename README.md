@@ -124,7 +124,12 @@ Phishi_Detector analyzes various components of emails and URLs, including sender
 
 Navigate to the project directory in your terminal. Here are some *examples* of how it might be run. You'll need to define how users pass emails or URLs.
 
-**Option 1: Using Command-Line Arguments (Recommended for Scripting)**
+**Option 1: Using Gui**
+![{4763B483-6CE6-420E-89E3-87E6D512CCA2}](https://github.com/user-attachments/assets/684451a2-b071-474d-bfdc-553eb8fc5075)
+![{A52DBC29-717D-494F-8233-3E32FE3BF203}](https://github.com/user-attachments/assets/e4630903-d2a6-4639-8e09-6b27bacd1b85)
+
+
+**Option 2: Using Command-Line Arguments (Recommended for Scripting)**
 
 ```bash
 # Example: Analyze an email file
@@ -138,3 +143,5 @@ python Phishi_Detector_Project.py --url "[https://example.com](https://example.c
 
 # Display help message (if you implement argparse)
 python Phishi_Detector_Project.py --help****
+
+
