@@ -1,82 +1,140 @@
-# Phishi_Detector
-This Python-based Phishing Detector scans emails and URLs for threats. It checks sender reputation, analyzes content for suspicious keywords and HTML tricks, inspects attachments, and leverages threat intelligence services to identify potential phishing.
-# Phishi Detector
+# Phishi_Detector 🎣
 
-## Features
+**A Python-based tool for scanning emails and URLs to detect potential phishing threats.**
 
-* Analyzes email headers for authentication status (SPF, DKIM, DMARC) and alignment.
-* Checks sender domain and IP reputation using WHOIS, VirusTotal, and AbuseIPDB.
-* Scans URLs found within email bodies against threat intelligence services like VirusTotal, Google Safe Browsing, and IPQS.
-* Performs lexical analysis of URLs for suspicious patterns (e.g., length, special characters, keywords, typosquatting).
-* Analyzes email body content (text and HTML) for phishing keywords, suspicious HTML forms, and obfuscation techniques.
-* Inspects email attachments for potentially risky file types and extensions.
-* Provides an overall phishing score and a qualitative verdict.
+Phishi_Detector analyzes various components of emails and URLs, including sender reputation, content, attachments, and leverages multiple threat intelligence services to provide a comprehensive phishing assessment.
 
-## Prerequisites
 
-* Python 3.7+
-* Required Python libraries (see `requirements.txt` or install manually):
+## 🌟 Key Features
+
+* **Email Header Analysis:**
+    * Verifies SPF, DKIM, and DMARC authentication statuses.
+    * Checks for header alignment to detect spoofing.
+* **Sender Reputation:**
+    * Utilizes WHOIS lookups for domain registration details.
+    * Integrates with VirusTotal and AbuseIPDB for domain and IP reputation.
+* **URL Scanning & Analysis:**
+    * Scans URLs found in email bodies using VirusTotal, Google Safe Browse, and IPQualityScore (IPQS).
+    * Performs lexical analysis for suspicious patterns (e.g., excessive length, special characters, phishing-related keywords, typosquatting).
+* **Content Inspection:**
+    * Analyzes email body (text and HTML) for common phishing keywords and phrases.
+    * Detects suspicious HTML forms and obfuscation techniques (e.g., hidden elements, JavaScript tricks).
+* **Attachment Checking:**
+    * Inspects email attachments for potentially risky file types and common malicious extensions.
+* **Scoring & Verdict:**
+    * Provides an overall phishing probability score.
+    * Delivers a qualitative verdict (e.g., Safe, Suspicious, Phishing).
+
+## ⚙️ How It Works (High-Level)
+
+1.  **Input:** Takes an email file (e.g., `.eml` format) or a direct URL as input.
+2.  **Extraction & Parsing:** Extracts relevant information: headers, body, attachments from emails; components from URLs.
+3.  **Analysis Modules:** Each feature (header check, URL scan, content analysis, etc.) processes the extracted data.
+4.  **API Integration:** Queries external threat intelligence services (VirusTotal, AbuseIPDB, etc.) for up-to-date threat data.
+5.  **Scoring Algorithm:** Aggregates findings from all modules using a weighted scoring system.
+6.  **Output:** Presents a summary report including the individual checks, overall score, and final verdict.
+
+## 🔧 Prerequisites
+
+* Python 3.7 or higher
+* Required Python libraries (see `requirements.txt`):
     * `requests`
     * `beautifulsoup4`
     * `dnspython`
     * `python-whois`
-    * `tabulate`
-    * `html5lib`
+    * `tabulate` (for potentially formatted output, consider if you'll use it for CLI reports)
+    * `html5lib` (parser for BeautifulSoup)
 
-## Setup
+## 🚀 Setup Instructions
 
-1.  **Clone the repository:**
+1.  **Clone the Repository:**
     ```bash
-    git clone [https://github.com/YOUR_USERNAME/YOUR_REPOSITORY_NAME.git](https://github.com/YOUR_USERNAME/YOUR_REPOSITORY_NAME.git)
-    cd YOUR_REPOSITORY_NAME
+    git clone [https://github.com/0xka3rim/Phishi_Detector.git](https://github.com/0xka3rim/Phishi_Detector.git)
+    cd Phishi_Detector
     ```
 
-2.  **Create a virtual environment (recommended):**
-    ```bash
-    python -m venv venv
-    source venv/bin/activate  # On Windows: venv\Scripts\activate
-    ```
+2.  **Create and Activate a Virtual Environment (Recommended):**
+    * **Linux/macOS:**
+        ```bash
+        python3 -m venv venv
+        source venv/bin/activate
+        ```
+    * **Windows:**
+        ```bash
+        python -m venv venv
+        venv\Scripts\activate
+        ```
 
-3.  **Install dependencies:**
-    You can create a `requirements.txt` file by running `pip freeze > requirements.txt` in your activated virtual environment after installing the packages manually for the first time. Then, others (or you in a new environment) can install using:
+3.  **Install Dependencies:**
+    Ensure you have a `requirements.txt` file in your repository. If not, you can create one after manual installation (for development):
     ```bash
+    # First time setup or if requirements.txt is missing
+    pip install requests beautifulsoup4 dnspython python-whois tabulate html5lib
+    pip freeze > requirements.txt # To generate the file for others
+
+    # If requirements.txt is already present
     pip install -r requirements.txt
     ```
-    Or install manually:
-    ```bash
-    pip install requests beautifulsoup4 dnspython python-whois tabulate html5lib
-    ```
 
-4.  **API Key Configuration (CRITICAL):**
-    This script requires API keys for full functionality with external services. **DO NOT hardcode API keys directly in the `Phishi_Detector_Project.py` script.**
-    You MUST configure them as environment variables:
+4.  **🔑 API Key Configuration (CRITICAL):**
+    This script requires API keys for full functionality with external services. **DO NOT hardcode API keys directly in the script.**
+    You **MUST** configure them as environment variables. The script will attempt to load these keys using `os.environ.get('API_KEY_NAME')`.
 
     * `VIRUSTOTAL_API_KEY`: Your API key for VirusTotal.
     * `ABUSEIPDB_API_KEY`: Your API key for AbuseIPDB.
-    * `GOOGLE_SAFE_BROWSING_API_KEY`: Your API key for Google Safe Browsing.
+    * `GOOGLE_SAFE_Browse_API_KEY`: Your API key for Google Safe Browse API (ensure you are using the correct API, e.g., Web Risk API).
     * `IPQS_API_KEY`: Your API key for IPQualityScore.
 
     **Setting Environment Variables:**
+
     * **Linux/macOS (bash/zsh):**
+        Open your shell configuration file (e.g., `~/.bashrc`, `~/.zshrc`) and add:
         ```bash
         export VIRUSTOTAL_API_KEY="your_actual_virustotal_key"
-        # Add to your shell profile (e.g., .bashrc, .zshrc) for persistence
+        export ABUSEIPDB_API_KEY="your_actual_abuseipdb_key"
+        export GOOGLE_SAFE_Browse_API_KEY="your_actual_google_key"
+        export IPQS_API_KEY="your_actual_ipqs_key"
         ```
-    * **Windows (Command Prompt):**
+        Then, source the file (e.g., `source ~/.bashrc`) or open a new terminal.
+
+    * **Windows (Command Prompt - Temporary):**
         ```cmd
         set VIRUSTOTAL_API_KEY="your_actual_virustotal_key"
-        # For persistence, set them through System Properties -> Environment Variables
+        set ABUSEIPDB_API_KEY="your_actual_abuseipdb_key"
+        # ... and so on for other keys
         ```
-    * **Windows (PowerShell):**
+        *(Note: These are set for the current session only.)*
+
+    * **Windows (PowerShell - Temporary):**
         ```powershell
         $Env:VIRUSTOTAL_API_KEY="your_actual_virustotal_key"
-        # For persistence, set them through System Properties or PowerShell profile
+        $Env:ABUSEIPDB_API_KEY="your_actual_abuseipdb_key"
+        # ... and so on for other keys
         ```
-    The script will attempt to load these keys. If any are missing, corresponding checks may be skipped or fail.
+        *(Note: These are set for the current session only.)*
 
-## Usage
+    * **Windows (Persistent):**
+        Search for "environment variables" in the Start Menu, click "Edit the system environment variables," then click the "Environment Variables..." button. Add new User variables with the names and your keys.
 
-Navigate to the project directory in your terminal and run the script:
+    If any API keys are missing, the corresponding checks may be skipped or functionality will be limited. The script should ideally handle these missing keys gracefully (e.g., by printing a warning).
+
+## 🎮 Usage
+
+**(Please update this section based on how your script actually takes input!)**
+
+Navigate to the project directory in your terminal. Here are some *examples* of how it might be run. You'll need to define how users pass emails or URLs.
+
+**Option 1: Using Command-Line Arguments (Recommended for Scripting)**
 
 ```bash
-python Phishi_Detector_Project.py
+# Example: Analyze an email file
+python Phishi_Detector_Project.py --email path/to/your/email.eml
+
+# Example: Analyze a single URL
+python Phishi_Detector_Project.py --url "[https://suspicious-example.com/login](https://suspicious-example.com/login)"
+
+# Example: Analyze a URL and output to a file
+python Phishi_Detector_Project.py --url "[https://example.com](https://example.com)" --output report.txt
+
+# Display help message (if you implement argparse)
+python Phishi_Detector_Project.py --help****
