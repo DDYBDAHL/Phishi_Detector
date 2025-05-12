@@ -1,4 +1,6 @@
 # Phishi_Detector 🎣
+![Gemini_Generated_Image_canou4canou4cano](https://github.com/user-attachments/assets/51e99fad-1961-4e6c-b5eb-d4b3523363e2)
+
 
 **A Python-based tool for scanning emails and URLs to detect potential phishing threats.**
 
