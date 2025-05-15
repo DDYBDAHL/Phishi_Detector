@@ -51,10 +51,14 @@ RED, GREEN, YELLOW, END = '\033[91m', '\033[1;32m', '\033[93m', '\033[0m'
 # WARNING: Hardcoding API keys is insecure. Use environment variables,
 # a configuration file, or a secure key management system in production.
 # These keys are copied from the original script for demonstration purposes ONLY.
-VIRUSTOTAL_API_KEY = "" # Replace with your actual key or load securely
-ABUSEIPDB_API_KEY = "" # Replace with your actual key or load securely
-GOOGLE_SAFE_BROWSING_API_KEY = "" # Replace with your actual key or load securely
-IPQS_API_KEY = "" # Replace with your actual key or load securely
+#VIRUSTOTAL_API_KEY = "" # Replace with your actual key or load securely
+#ABUSEIPDB_API_KEY = "" # Replace with your actual key or load securely
+#GOOGLE_SAFE_BROWSING_API_KEY = "" # Replace with your actual key or load securely
+#IPQS_API_KEY = "" # Replace with your actual key or load securely
+VIRUSTOTAL_API_KEY = os.getenv("VIRUSTOTAL_API_KEY")
+ABUSEIPDB_API_KEY = os.getenv("ABUSEIPDB_API_KEY")
+GOOGLE_SAFE_BROWSING_API_KEY = os.getenv("GOOGLE_SAFE_BROWSING_API_KEY")
+IPQS_API_KEY = os.getenv("IPQS_API_KEY")
 
 # Check if required API keys are set
 REQUIRED_KEYS = {
