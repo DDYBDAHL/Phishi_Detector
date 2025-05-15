@@ -51,7 +51,7 @@ Phishi_Detector analyzes various components of emails and URLs, including sender
 
 1.  **Clone the Repository:**
     ```bash
-    git clone [https://github.com/0xka3rim/Phishi_Detector.git](https://github.com/0xka3rim/Phishi_Detector.git)
+    git clone https://github.com/DDYBDAHL/Phishi_Detector.git
     cd Phishi_Detector
     ```
 
